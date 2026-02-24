@@ -38,7 +38,7 @@ jobs:
       - name: Deploy files to TEST server
         run: |
           rsync -avz --delete \
-            ./dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/quizlive/test/frontend/Quizlive-frontend
+            ./dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/quizlive/test/frontend/
 
   deploy-production:
     if: github.ref == 'refs/heads/stage'
@@ -69,4 +69,4 @@ jobs:
       - name: Deploy files to PRODUCTION
         run: |
           rsync -avz --delete \
-            ./dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/quizlive/prod/frontend/Quizlive-frontend
+            ./dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/quizlive/prod/frontend/

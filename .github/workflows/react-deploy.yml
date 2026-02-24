@@ -1,0 +1,72 @@
+name: React Deploy Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - stage
+
+jobs:
+  deploy-test:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      # Setup SSH
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      # Rsync deploy
+      - name: Deploy files to TEST server
+        run: |
+          rsync -avz --delete \
+            ./dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/quizlive/test/frontend
+
+  deploy-production:
+    if: github.ref == 'refs/heads/stage'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy files to PRODUCTION
+        run: |
+          rsync -avz --delete \
+            ./dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/quizlive/prod/frontend

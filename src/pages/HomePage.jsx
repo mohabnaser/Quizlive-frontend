@@ -17,6 +17,7 @@ import { Badge } from '@/components/ui/badge'
 import { Container } from '@/components/ui/container'
 import { Section } from '@/components/ui/section'
 import { cn } from '@/lib/utils'
+import Example from '@/assets/Screenshot 2026-02-21 070232.png'
 
 
 function HeroSection() {
@@ -63,7 +64,7 @@ function HeroSection() {
 
                     <div className="mt-14 w-[800px] max-w-full animate-slide-up" style={{ animationDelay: '0.3s' }}>
                         <img
-                            src="/src/assets/Screenshot 2026-02-21 070232.png"
+                            src={Example}
                             alt="Data Dashboard Preview"
                             className="w-full h-auto rounded-2xl shadow-2xl shadow-primary-500/20 border border-dark-border bg-dark-card/50"
                         />

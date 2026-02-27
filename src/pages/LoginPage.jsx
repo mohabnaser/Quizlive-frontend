@@ -49,10 +49,11 @@ export function LoginPage() {
     const handleSignIn = async (e) => {
         e.preventDefault()
         setIsLoading(true)
-        await new Promise((resolve) => setTimeout(resolve, 1800))
+        await new Promise((resolve) => setTimeout(resolve, 1500))
         setIsLoading(false)
-        const isNewUser = !email.includes('existing')
-        navigate(isNewUser ? '/onboarding' : '/dashboard')
+        // In a real app, the server would return the user's role.
+        // Navigating to /dashboard (Teacher) as a sensible default for logged-in users.
+        navigate('/dashboard')
     }
 
     const handleGoogleAuth = async () => {

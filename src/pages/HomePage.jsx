@@ -65,7 +65,7 @@ function HeroSection() {
                     <div className="mt-14 w-[800px] max-w-full animate-slide-up" style={{ animationDelay: '0.3s' }}>
                         <img
                             src={Example}
-                            alt="Data Dashboard Preview"
+                            alt="Example Preview"
                             className="w-full h-auto rounded-2xl shadow-2xl shadow-primary-500/20 border border-dark-border bg-dark-card/50"
                         />
                     </div>

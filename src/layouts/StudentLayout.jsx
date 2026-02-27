@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom'
-import { Sidebar } from '@/components/layout/Sidebar'
+import { StudentSidebar } from '@/components/layout/StudentSidebar'
 
-export function DashboardLayout() {
+export function StudentLayout() {
     return (
         <div className="min-h-screen flex" style={{ background: '#0D0D1A' }}>
-            <Sidebar />
+            <StudentSidebar />
             <main className="flex-1 overflow-auto" style={{ marginLeft: '240px' }}>
                 <Outlet />
             </main>
